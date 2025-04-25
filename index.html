@@ -191,12 +191,12 @@
     </header>
 
     <div class="status-grid" id="statusContainer">
-      <!-- Conteúdo dinâmico -->
+      <!-- Conteúdo dinâmico será carregado aqui -->
     </div>
 
     <div class="form-section">
       <h2 class="form-title">REPORTAR PROBLEMA</h2>
-      <form name="reporte-problema" netlify action="/sucesso.html">
+      <form name="reporte-problema" netlify>
         <input type="hidden" name="form-name" value="reporte-problema" />
         <div class="form-group">
           <label for="problemType">Tipo de Problema</label>
@@ -221,7 +221,7 @@
 
     <div class="form-section">
       <h2 class="form-title">SOLICITAR CONTEÚDO</h2>
-      <form name="solicitacao-conteudo" netlify action="/sucesso.html">
+      <form name="solicitacao-conteudo" netlify>
         <input type="hidden" name="form-name" value="solicitacao-conteudo" />
         <div class="form-group">
           <label for="contentType">Tipo de Conteúdo*</label>
@@ -251,95 +251,106 @@
     <footer>
       DALTV &copy; <span id="year"></span> - Todos os direitos reservados |
       <a href="/sobre.html">Sobre nós</a>
-    </footer>
+    </footer><div style="text-align:center; margin-top: 20px;">
+  <a href="https://chat.whatsapp.com/SEU-LINK-AQUI" target="_blank" style="
+    background-color: var(--vermelho);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    margin-bottom: 40px;
+  ">ENTRAR NO GRUPO DE CLIENTES</a>
+</div>
   </div>
 
-<script>
+  <script>
     function animateCount(el, end, duration = 3000) {
-        const start = 0;
-        const range = end - start;
-        const stepTime = Math.abs(Math.floor(duration / range));
-        let current = start;
-        const increment = end > start ? 1 : -1;
+      const start = 0;
+      const range = end - start;
+      const stepTime = Math.abs(Math.floor(duration / range));
+      let current = start;
+      const increment = end > start ? 1 : -1;
 
-        const timer = setInterval(() => {
-            current += increment;
-            el.textContent = current;
-            if (current === end) {
-                clearInterval(timer);
-            }
-        }, stepTime);
+      const timer = setInterval(() => {
+        current += increment;
+        el.textContent = current;
+        if (current === end) {
+          clearInterval(timer);
+        }
+      }, stepTime);
     }
 
     function formatDateTime(isoString) {
-        const date = new Date(isoString);
-        return date.toLocaleString('pt-BR', {
-            dateStyle: 'short',
-            timeStyle: 'short'
-        });
+      const date = new Date(isoString);
+      return date.toLocaleString('pt-BR', {
+        dateStyle: 'short',
+        timeStyle: 'short'
+      });
     }
 
     fetch('status.json')
-        .then(response => response.json())
-        .then(data => {
-            let html = `
-                <div class="status-card" style="text-align:center">
-                    <h3 class="status-title">📅 Última Atualização</h3>
-                    <p>${formatDateTime(data.ultima_atualizacao)}</p>
-                </div>
-            `;
+      .then(response => response.json())
+      .then(data => {
+        let html = `
+          <div class="status-card" style="text-align:center">
+            <h3 class="status-title">📅 Última Atualização</h3>
+            <p>${formatDateTime(data.ultima_atualizacao)}</p>
+          </div>
+        `;
 
-            data.servicos.forEach(servico => {
-                if (servico.nome === "Servidor Principal") return;
+        data.servicos.forEach(servico => {
+          if (servico.nome === "Servidor Principal") return;
 
-                let statusClass = '';
-                let statusText = '';
+          let statusClass = '';
+          let statusText = '';
 
-                switch(servico.status) {
-                    case 'operacional':
-                        statusClass = 'operational';
-                        statusText = 'OPERACIONAL';
-                        break;
-                    case 'manutencao':
-                        statusClass = 'maintenance';
-                        statusText = 'EM MANUTENÇÃO';
-                        break;
-                    case 'fora':
-                        statusClass = 'outage';
-                        statusText = 'FORA DO AR';
-                        break;
-                }
+          switch(servico.status) {
+            case 'operacional':
+              statusClass = 'operational';
+              statusText = 'OPERACIONAL';
+              break;
+            case 'manutencao':
+              statusClass = 'maintenance';
+              statusText = 'EM MANUTENÇÃO';
+              break;
+            case 'fora':
+              statusClass = 'outage';
+              statusText = 'FORA DO AR';
+              break;
+          }
 
-                const quantidade = servico.quantidade || 0;
-                const tipo = servico.nome.includes('Canal') ? 'CANAIS' : servico.nome.toUpperCase();
+          const quantidade = servico.quantidade || 0;
+          const tipo = servico.nome.includes('Canal') ? 'CANAIS' : servico.nome.toUpperCase();
 
-                html += `
-                    <div class="status-card">
-                        <h3 class="status-title">${servico.nome}</h3>
-                        <p class="status ${statusClass}">${statusText}</p>
-                        <p>${servico.mensagem}</p>
-                        <p><strong>${tipo} DISPONÍVEIS:</strong> <span class="contador" data-valor="${quantidade}">0</span></p>
-                    </div>
-                `;
-            });
-
-            document.getElementById('statusContainer').innerHTML = html;
-
-            document.querySelectorAll('.contador').forEach(span => {
-                animateCount(span, parseInt(span.dataset.valor), 3000);
-            });
-
-            document.getElementById('year').textContent = new Date().getFullYear();
-        })
-        .catch(error => {
-            document.getElementById('statusContainer').innerHTML = `
-                <div class="status-card">
-                    <h3 class="status-title">Erro</h3>
-                    <p class="status outage">ERRO AO CARREGAR</p>
-                    <p>Não foi possível carregar o status do servidor</p>
-                </div>
-            `;
+          html += `
+            <div class="status-card">
+              <h3 class="status-title">${servico.nome}</h3>
+              <p class="status ${statusClass}">${statusText}</p>
+              <p>${servico.mensagem}</p>
+              <p><strong>${tipo} DISPONÍVEIS:</strong> <span class="contador" data-valor="${quantidade}">0</span></p>
+            </div>
+          `;
         });
-</script>
+
+        document.getElementById('statusContainer').innerHTML = html;
+
+        document.querySelectorAll('.contador').forEach(span => {
+          animateCount(span, parseInt(span.dataset.valor), 3000);
+        });
+
+        document.getElementById('year').textContent = new Date().getFullYear();
+      })
+      .catch(error => {
+        document.getElementById('statusContainer').innerHTML = `
+          <div class="status-card">
+            <h3 class="status-title">Erro</h3>
+            <p>Não foi possível carregar o status do servidor.</p>
+          </div>
+        `;
+        console.error('Erro ao buscar status.json:', error);
+      });
+  </script>
 </body>
 </html>
