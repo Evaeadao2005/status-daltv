@@ -1,11 +1,6 @@
 [build]
   publish = "."
 
-[[redirects]]
-  from = "/admin"
-  to = "/admin.html"
-  status = 200
-
-# Desativa TODOS os e-mails
+# Desativa notificações por e-mail
 [context.production.environment]
   NETLIFY_EMAILS_DISABLED = "true"
