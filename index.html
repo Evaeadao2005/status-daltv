@@ -272,22 +272,25 @@
   </div>
 
   <script>
-    function animateCount(el, end, duration = 300) {
-      const start = 0;
-      const range = end - start;
-      const stepTime = Math.abs(Math.floor(duration / range));
-      let current = start;
-      const increment = end > start ? 1 : -1;
+function animateCount(el, end, duration = 300) {
+  const start = 0;
+  const range = end - start;
+  const startTime = performance.now();
 
-      const timer = setInterval(() => {
-        current += increment;
-        el.textContent = current;
-        if (current === end) {
-          clearInterval(timer);
-        }
-      }, stepTime);
+  function updateCount(timestamp) {
+    const elapsed = timestamp - startTime;
+    const progress = Math.min(elapsed / duration, 1); // Limita a progressão até 100%
+
+    const current = Math.floor(start + range * progress);
+    el.textContent = current;
+
+    if (progress < 1) {
+      requestAnimationFrame(updateCount); // Continua a animação
     }
+  }
 
+  requestAnimationFrame(updateCount); // Inicia a animação
+}
     function formatDateTime(isoString) {
       const date = new Date(isoString);
       return date.toLocaleString('pt-BR', {
