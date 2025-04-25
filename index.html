@@ -277,9 +277,12 @@ function animateCount(el, end, duration = 300) {
   const range = end - start;
   const startTime = performance.now();
 
+  // Determinar o número de incrementos por segundo
+  const speed = Math.max(1, Math.floor(range / (duration / 1000))); // Incrementos por segundo
+
   function updateCount(timestamp) {
     const elapsed = timestamp - startTime;
-    const progress = Math.min(elapsed / duration, 1); // Limita a progressão até 100%
+    const progress = Math.min(elapsed / duration, 1); // Limita o progresso a 100%
 
     const current = Math.floor(start + range * progress);
     el.textContent = current;
@@ -289,7 +292,8 @@ function animateCount(el, end, duration = 300) {
     }
   }
 
-  requestAnimationFrame(updateCount); // Inicia a animação
+  // Inicia a animação
+  requestAnimationFrame(updateCount);
 }
     function formatDateTime(isoString) {
       const date = new Date(isoString);
