@@ -3,22 +3,20 @@
     {
       "nome": "Canais Ao Vivo",
       "status": "operacional",
-      "mensagem": "Todos os canais funcionando normalmente"
+      "mensagem": "Todos os canais funcionando normalmente",
+      "quantidade": 320
     },
     {
       "nome": "Filmes",
       "status": "operacional",
-      "mensagem": "Catálogo completo disponível"
+      "mensagem": "Catálogo completo disponível",
+      "quantidade": 870
     },
     {
       "nome": "Séries",
       "status": "operacional",
-      "mensagem": "Todas as séries disponíveis"
-    },
-    {
-      "nome": "Servidor Principal",
-      "status": "operacional",
-      "mensagem": "Latência: 32ms | Estabilidade: 99.9%"
+      "mensagem": "Todas as séries disponíveis",
+      "quantidade": 560
     }
   ],
   "ultima_atualizacao": "2023-11-22T15:45:00-03:00"
