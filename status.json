@@ -1,30 +1,24 @@
 {
-  "services": [
+  "ultima_atualizacao": "2023-11-22T10:00:00-03:00",
+  "servicos": [
     {
-      "name": "Canais Ao Vivo",
-      "status": "operational",
-      "message": "Todos os canais funcionando normalmente"
+      "nome": "Canais Ao Vivo",
+      "status": "operacional",
+      "mensagem": "Todos os canais funcionando"
     },
     {
-      "name": "Filmes",
-      "status": "operational",
-      "message": "Catálogo completo disponível"
+      "nome": "Filmes",
+      "status": "operacional",
+      "mensagem": "Catálogo completo"
     },
     {
-      "name": "Séries",
-      "status": "operational",
-      "message": "Todas as séries acessíveis"
-    },
-    {
-      "name": "Servidor",
-      "status": "operational",
-      "message": "Estabilidade 99.9%"
+      "nome": "Séries",
+      "status": "manutencao",
+      "mensagem": "Atualização em andamento"
     }
   ],
-  "last_updated": "2023-11-20T15:30:00-03:00",
-  "system_status": {
-    "load": "25%",
+  "status_servidor": {
     "uptime": "99.9%",
-    "clients_online": 1428
+    "clientes_online": 1428
   }
 }
