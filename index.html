@@ -1,72 +1,100 @@
-<script>
-// Função corrigida para enviar qualquer tipo de formulário
-async function handleFormSubmit(event, formType) {
-    event.preventDefault();
-    
-    const form = event.target;
-    const formData = new FormData(form);
-    const submitBtn = form.querySelector('button[type="submit"]');
-    
-    // Mostrar loading
-    submitBtn.disabled = true;
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
-    
-    try {
-        const data = {
-            report_type: formType,
-            description: formData.get('description'),
-            whatsapp: formData.get('whatsapp') || null
-        };
-
-        // Dados específicos para solicitação de conteúdo
-        if (formType === 'request') {
-            data.content_type = formData.get('type');
-            data.content_name = formData.get('content_name');
-            data.reason = formData.get('reason');
-        } 
-        // Dados específicos para reporte de problema
-        else {
-            data.problem_type = formData.get('type');
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DALTV • Status</title>
+    <style>
+        :root {
+            --vermelho: #D10000;
+            --preto: #000000;
+            --cinza: #222222;
         }
+        body {
+            font-family: Arial, sans-serif;
+            background: var(--preto);
+            color: white;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .status-card {
+            background: var(--cinza);
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid var(--vermelho);
+        }
+        form {
+            margin: 20px 0;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            background: #111;
+            border: 1px solid #333;
+            color: white;
+        }
+        button {
+            background: var(--vermelho);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔴 DALTV STATUS</h1>
+    
+    <div id="status-container">
+        <!-- Status carregado via JavaScript -->
+        <p>Carregando status...</p>
+    </div>
 
-        const response = await fetch('/.netlify/functions/submit-report', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        });
+    <!-- Formulário de Reporte -->
+    <form name="reporte-problema" netlify action="/sucesso.html">
+        <h2>Reportar Problema</h2>
+        <input type="hidden" name="tipo" value="problema">
+        <select name="categoria" required>
+            <option value="">Selecione...</option>
+            <option value="canal_fora">Canal fora do ar</option>
+            <option value="qualidade">Problema de qualidade</option>
+        </select>
+        <textarea name="descricao" required placeholder="Descreva o problema"></textarea>
+        <input type="text" name="whatsapp" placeholder="WhatsApp (opcional)">
+        <button type="submit">Enviar</button>
+    </form>
 
-        const result = await response.json();
+    <!-- Formulário de Solicitação -->
+    <form name="solicitacao-conteudo" netlify action="/sucesso.html">
+        <h2>Solicitar Conteúdo</h2>
+        <input type="hidden" name="tipo" value="solicitacao">
+        <input type="text" name="nome_conteudo" required placeholder="Nome do conteúdo">
+        <textarea name="motivo" required placeholder="Por que deseja este conteúdo?"></textarea>
+        <input type="text" name="whatsapp" placeholder="WhatsApp (opcional)">
+        <button type="submit">Enviar Solicitação</button>
+    </form>
 
-        if (!response.ok) throw new Error(result.error || 'Erro desconhecido');
+    <p><a href="/admin.html">Área Admin</a></p>
 
-        // Sucesso!
-        alert(result.message);
-        form.reset();
-        
-    } catch (error) {
-        console.error('Erro:', error);
-        alert(`Erro ao enviar: ${error.message}`);
-    } finally {
-        // Restaurar botão
-        submitBtn.disabled = false;
-        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Enviar';
-    }
-}
-
-// Configurar listeners para os formulários
-document.addEventListener('DOMContentLoaded', () => {
-    // Formulário de problema
-    const problemForm = document.getElementById('problemForm');
-    if (problemForm) {
-        problemForm.addEventListener('submit', (e) => handleFormSubmit(e, 'problem'));
-    }
-
-    // Formulário de solicitação
-    const requestForm = document.getElementById('requestForm');
-    if (requestForm) {
-        requestForm.addEventListener('submit', (e) => handleFormSubmit(e, 'request'));
-    }
-});
-</script>
+    <script>
+        // Carrega status do status.json
+        fetch('status.json')
+            .then(response => response.json())
+            .then(data => {
+                let html = '';
+                data.servicos.forEach(servico => {
+                    html += `
+                        <div class="status-card">
+                            <h3>${servico.nome}</h3>
+                            <p>Status: <strong>${servico.status.toUpperCase()}</strong></p>
+                            <p>${servico.mensagem}</p>
+                        </div>
+                    `;
+                });
+                document.getElementById('status-container').innerHTML = html;
+            });
+    </script>
+</body>
+</html>
