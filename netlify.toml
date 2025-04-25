@@ -1,0 +1,11 @@
+[build]
+  command = "echo 'Building site'"
+  publish = "."
+
+[[redirects]]
+  from = "/admin"
+  to = "/admin.html"
+  status = 200
+
+[functions]
+  directory = "functions"
