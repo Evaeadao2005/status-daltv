@@ -1,286 +1,345 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DALTV Status</title>
-    <style>
-        :root {
-            --vermelho: #D10000;
-            --preto: #000000;
-            --cinza: #1A1A1A;
-        }
-        
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: var(--preto);
-            color: white;
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        header {
-            text-align: center;
-            padding: 30px 0;
-            border-bottom: 3px solid var(--vermelho);
-            margin-bottom: 30px;
-        }
-        
-        .logo {
-            max-width: 200px;
-            margin: 0 auto;
-        }
-        
-        h1 {
-            color: var(--vermelho);
-            margin-top: 10px;
-        }
-        
-        .status-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-        
-        .status-card {
-            background: var(--cinza);
-            border-radius: 8px;
-            padding: 20px;
-            border-left: 4px solid var(--vermelho);
-        }
-        
-        .status-title {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            color: white;
-        }
-        
-        .status {
-            font-weight: bold;
-            margin: 10px 0;
-        }
-        
-        .operational {
-            color: #00FF00;
-        }
-        
-        .maintenance {
-            color: #FFFF00;
-        }
-        
-        .outage {
-            color: var(--vermelho);
-        }
-        
-        .form-section {
-            background: var(--cinza);
-            border-radius: 8px;
-            padding: 25px;
-            margin-top: 40px;
-            border: 1px solid #333;
-        }
-        
-        .form-title {
-            color: var(--vermelho);
-            margin-top: 0;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
-        
-        input, textarea, select {
-            width: 100%;
-            padding: 12px;
-            background: #111;
-            border: 1px solid #333;
-            border-radius: 4px;
-            color: white;
-            font-family: inherit;
-        }
-        
-        textarea {
-            min-height: 120px;
-        }
-        
-        button {
-            background: var(--vermelho);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 4px;
-            font-weight: bold;
-            cursor: pointer;
-            width: 100%;
-            font-size: 1rem;
-        }
-        
-        button:hover {
-            background: #B00000;
-        }
-        
-        footer {
-            text-align: center;
-            margin-top: 50px;
-            padding: 20px;
-            color: #666;
-        }
-        
-        @media (max-width: 600px) {
-            .container {
-                padding: 15px;
-            }
-            
-            .status-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DALTV Status</title>
+  <style>
+    :root {
+      --vermelho: #D10000;
+      --vermelho-hover: #B00000;
+      --preto: #000000;
+      --cinza: #1A1A1A;
+      --cinza-claro: #2a2a2a;
+      --verde: #00FF00;
+      --amarelo: #FFFF00;
+      --branco: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--preto);
+      color: var(--branco);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px;
+      border-bottom: 3px solid var(--vermelho);
+    }
+
+    .logo img {
+      max-width: 160px;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(209, 0, 0, 0.4);
+    }
+
+    h1 {
+      margin-top: 20px;
+      color: var(--vermelho);
+      font-size: 2rem;
+    }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin: 40px 0;
+    }
+
+    .status-card {
+      background-color: var(--cinza);
+      border-left: 5px solid var(--vermelho);
+      padding: 20px;
+      border-radius: 10px;
+      transition: transform 0.2s ease;
+    }
+
+    .status-card:hover {
+      transform: scale(1.02);
+      background-color: var(--cinza-claro);
+    }
+
+    .status-title {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+
+    .status {
+      font-weight: bold;
+      margin: 8px 0;
+    }
+
+    .operational {
+      color: var(--verde);
+    }
+
+    .maintenance {
+      color: var(--amarelo);
+    }
+
+    .outage {
+      color: var(--vermelho);
+    }
+
+    .form-section {
+      background-color: var(--cinza);
+      border-radius: 10px;
+      padding: 30px;
+      margin-bottom: 40px;
+    }
+
+    .form-title {
+      color: var(--vermelho);
+      margin-bottom: 20px;
+      font-size: 1.4rem;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 12px;
+      background: #111;
+      border: 1px solid #444;
+      border-radius: 6px;
+      color: white;
+      font-size: 1rem;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--vermelho);
+      outline: none;
+    }
+
+    textarea {
+      min-height: 100px;
+    }
+
+    button {
+      background: var(--vermelho);
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 1rem;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    button:hover {
+      background: var(--vermelho-hover);
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 10px;
+      color: #aaa;
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: #aaa;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.6rem;
+      }
+
+      .form-title {
+        font-size: 1.2rem;
+      }
+
+      button {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="logo">
-                <!-- Coloque sua logo aqui -->
-                <img src="logo-daltv.png" alt="DALTV" width="200">
-            </div>
-            <h1>STATUS DO SERVIDOR</h1>
-        </header>
-        
-        <div class="status-grid" id="statusContainer">
-            <!-- Status será carregado aqui -->
-        </div>
-        
-        <!-- Formulário de Reporte de Problema -->
-        <div class="form-section">
-            <h2 class="form-title">REPORTAR PROBLEMA</h2>
-            <form name="reporte-problema" netlify action="/sucesso.html">
-                <input type="hidden" name="form-name" value="reporte-problema">
-                
-                <div class="form-group">
-                    <label for="problemType">Tipo de Problema</label>
-                    <select id="problemType" name="tipo_problema" required>
-                        <option value="">Selecione...</option>
-                        <option value="canal_fora">Canal fora do ar</option>
-                        <option value="qualidade">Problema de qualidade</option>
-                        <option value="outro">Outro problema</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="problemDescription">Descrição do Problema*</label>
-                    <textarea id="problemDescription" name="descricao" required></textarea>
-                </div>
-                
-                <div class="form-group">
-                    <label for="whatsapp">WhatsApp (opcional)</label>
-                    <input type="text" id="whatsapp" name="whatsapp" placeholder="(00) 00000-0000">
-                </div>
-                
-                <button type="submit">ENVIAR REPORTE</button>
-            </form>
-        </div>
-        
-        <!-- Formulário de Solicitação de Conteúdo -->
-        <div class="form-section">
-            <h2 class="form-title">SOLICITAR CONTEÚDO</h2>
-            <form name="solicitacao-conteudo" netlify action="/sucesso.html">
-                <input type="hidden" name="form-name" value="solicitacao-conteudo">
-                
-                <div class="form-group">
-                    <label for="contentType">Tipo de Conteúdo*</label>
-                    <select id="contentType" name="tipo_conteudo" required>
-                        <option value="">Selecione...</option>
-                        <option value="canal">Canal</option>
-                        <option value="filme">Filme</option>
-                        <option value="serie">Série</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="contentName">Nome do Conteúdo*</label>
-                    <input type="text" id="contentName" name="nome_conteudo" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="contentReason">Por que deseja este conteúdo?*</label>
-                    <textarea id="contentReason" name="motivo" required></textarea>
-                </div>
-                
-                <div class="form-group">
-                    <label for="requestWhatsapp">WhatsApp (opcional)</label>
-                    <input type="text" id="requestWhatsapp" name="whatsapp" placeholder="(00) 00000-0000">
-                </div>
-                
-                <button type="submit">ENVIAR SOLICITAÇÃO</button>
-            </form>
-        </div>
-        
-        <footer>
-            DALTV &copy; <span id="year"></span> - Todos os direitos reservados
-        </footer>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <img src="logo-daltv.png" alt="DALTV Logo" />
+      </div>
+      <h1>STATUS DO SERVIDOR</h1>
+    </header>
+
+    <div class="status-grid" id="statusContainer">
+      <!-- Conteúdo dinâmico -->
     </div>
 
-    <script>
-        // Carrega status do servidor
-        fetch('status.json')
-            .then(response => response.json())
-            .then(data => {
-                let html = '';
-                data.servicos.forEach(servico => {
-                    let statusClass = '';
-                    let statusText = '';
-                    
-                    switch(servico.status) {
-                        case 'operacional':
-                            statusClass = 'operational';
-                            statusText = 'OPERACIONAL';
-                            break;
-                        case 'manutencao':
-                            statusClass = 'maintenance';
-                            statusText = 'EM MANUTENÇÃO';
-                            break;
-                        case 'fora':
-                            statusClass = 'outage';
-                            statusText = 'FORA DO AR';
-                            break;
-                    }
-                    
-                    html += `
-                        <div class="status-card">
-                            <h3 class="status-title">${servico.nome}</h3>
-                            <p class="status ${statusClass}">${statusText}</p>
-                            <p>${servico.mensagem}</p>
-                        </div>
-                    `;
-                });
-                
-                document.getElementById('statusContainer').innerHTML = html;
-                document.getElementById('year').textContent = new Date().getFullYear();
-            })
-            .catch(error => {
-                document.getElementById('statusContainer').innerHTML = `
+    <div class="form-section">
+      <h2 class="form-title">REPORTAR PROBLEMA</h2>
+      <form name="reporte-problema" netlify action="/sucesso.html">
+        <input type="hidden" name="form-name" value="reporte-problema" />
+        <div class="form-group">
+          <label for="problemType">Tipo de Problema</label>
+          <select id="problemType" name="tipo_problema" required>
+            <option value="">Selecione...</option>
+            <option value="canal_fora">Canal fora do ar</option>
+            <option value="qualidade">Problema de qualidade</option>
+            <option value="outro">Outro problema</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="problemDescription">Descrição do Problema*</label>
+          <textarea id="problemDescription" name="descricao" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="whatsapp">WhatsApp (opcional)</label>
+          <input type="text" id="whatsapp" name="whatsapp" placeholder="(00) 00000-0000" />
+        </div>
+        <button type="submit">ENVIAR REPORTE</button>
+      </form>
+    </div>
+
+    <div class="form-section">
+      <h2 class="form-title">SOLICITAR CONTEÚDO</h2>
+      <form name="solicitacao-conteudo" netlify action="/sucesso.html">
+        <input type="hidden" name="form-name" value="solicitacao-conteudo" />
+        <div class="form-group">
+          <label for="contentType">Tipo de Conteúdo*</label>
+          <select id="contentType" name="tipo_conteudo" required>
+            <option value="">Selecione...</option>
+            <option value="canal">Canal</option>
+            <option value="filme">Filme</option>
+            <option value="serie">Série</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="contentName">Nome do Conteúdo*</label>
+          <input type="text" id="contentName" name="nome_conteudo" required />
+        </div>
+        <div class="form-group">
+          <label for="contentReason">Por que deseja este conteúdo?*</label>
+          <textarea id="contentReason" name="motivo" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="requestWhatsapp">WhatsApp (opcional)</label>
+          <input type="text" id="requestWhatsapp" name="whatsapp" placeholder="(00) 00000-0000" />
+        </div>
+        <button type="submit">ENVIAR SOLICITAÇÃO</button>
+      </form>
+    </div>
+
+    <footer>
+      DALTV &copy; <span id="year"></span> - Todos os direitos reservados |
+      <a href="/sobre.html">Sobre nós</a>
+    </footer>
+  </div>
+
+<script>
+    function animateCount(el, end, duration = 3000) {
+        const start = 0;
+        const range = end - start;
+        const stepTime = Math.abs(Math.floor(duration / range));
+        let current = start;
+        const increment = end > start ? 1 : -1;
+
+        const timer = setInterval(() => {
+            current += increment;
+            el.textContent = current;
+            if (current === end) {
+                clearInterval(timer);
+            }
+        }, stepTime);
+    }
+
+    function formatDateTime(isoString) {
+        const date = new Date(isoString);
+        return date.toLocaleString('pt-BR', {
+            dateStyle: 'short',
+            timeStyle: 'short'
+        });
+    }
+
+    fetch('status.json')
+        .then(response => response.json())
+        .then(data => {
+            let html = `
+                <div class="status-card" style="text-align:center">
+                    <h3 class="status-title">📅 Última Atualização</h3>
+                    <p>${formatDateTime(data.ultima_atualizacao)}</p>
+                </div>
+            `;
+
+            data.servicos.forEach(servico => {
+                if (servico.nome === "Servidor Principal") return;
+
+                let statusClass = '';
+                let statusText = '';
+
+                switch(servico.status) {
+                    case 'operacional':
+                        statusClass = 'operational';
+                        statusText = 'OPERACIONAL';
+                        break;
+                    case 'manutencao':
+                        statusClass = 'maintenance';
+                        statusText = 'EM MANUTENÇÃO';
+                        break;
+                    case 'fora':
+                        statusClass = 'outage';
+                        statusText = 'FORA DO AR';
+                        break;
+                }
+
+                const quantidade = servico.quantidade || 0;
+                const tipo = servico.nome.includes('Canal') ? 'CANAIS' : servico.nome.toUpperCase();
+
+                html += `
                     <div class="status-card">
-                        <h3 class="status-title">Erro</h3>
-                        <p class="status outage">ERRO AO CARREGAR</p>
-                        <p>Não foi possível carregar o status do servidor</p>
+                        <h3 class="status-title">${servico.nome}</h3>
+                        <p class="status ${statusClass}">${statusText}</p>
+                        <p>${servico.mensagem}</p>
+                        <p><strong>${tipo} DISPONÍVEIS:</strong> <span class="contador" data-valor="${quantidade}">0</span></p>
                     </div>
                 `;
             });
-    </script>
+
+            document.getElementById('statusContainer').innerHTML = html;
+
+            document.querySelectorAll('.contador').forEach(span => {
+                animateCount(span, parseInt(span.dataset.valor), 3000);
+            });
+
+            document.getElementById('year').textContent = new Date().getFullYear();
+        })
+        .catch(error => {
+            document.getElementById('statusContainer').innerHTML = `
+                <div class="status-card">
+                    <h3 class="status-title">Erro</h3>
+                    <p class="status outage">ERRO AO CARREGAR</p>
+                    <p>Não foi possível carregar o status do servidor</p>
+                </div>
+            `;
+        });
+</script>
 </body>
 </html>
