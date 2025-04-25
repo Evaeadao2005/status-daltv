@@ -1,0 +1,30 @@
+{
+  "services": [
+    {
+      "name": "Canais Ao Vivo",
+      "status": "operational",
+      "message": "Todos os canais funcionando normalmente"
+    },
+    {
+      "name": "Filmes",
+      "status": "operational",
+      "message": "Catálogo completo disponível"
+    },
+    {
+      "name": "Séries",
+      "status": "operational",
+      "message": "Todas as séries acessíveis"
+    },
+    {
+      "name": "Servidor",
+      "status": "operational",
+      "message": "Estabilidade 99.9%"
+    }
+  ],
+  "last_updated": "2023-11-20T15:30:00-03:00",
+  "system_status": {
+    "load": "25%",
+    "uptime": "99.9%",
+    "clients_online": 1428
+  }
+}
