@@ -4,20 +4,20 @@
       "nome": "Canais Ao Vivo",
       "status": "operacional",
       "mensagem": "Todos os canais funcionando normalmente",
-      "quantidade": 320
+      "quantidade": 2001
     },
     {
       "nome": "Filmes",
       "status": "operacional",
       "mensagem": "Catálogo completo disponível",
-      "quantidade": 870
+      "quantidade": 13857
     },
     {
       "nome": "Séries",
       "status": "operacional",
       "mensagem": "Todas as séries disponíveis",
-      "quantidade": 560
+      "quantidade": 7079
     }
   ],
-  "ultima_atualizacao": "2023-11-22T15:45:00-03:00"
+  "ultima_atualizacao": "2025-04-25T00:00:00"
 }
