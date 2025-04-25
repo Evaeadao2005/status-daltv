@@ -1,5 +1,4 @@
 [build]
-  command = "echo 'Building site'"
   publish = "."
 
 [[redirects]]
@@ -7,5 +6,6 @@
   to = "/admin.html"
   status = 200
 
-[functions]
-  directory = "functions"
+# Desativa TODOS os e-mails
+[context.production.environment]
+  NETLIFY_EMAILS_DISABLED = "true"
